@@ -1,0 +1,30 @@
+ # Python
+
+**pycache**/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+
+venv/
+env/
+.venv/
+
+# VS Code
+
+.vscode/
+
+# PyCharm
+
+.idea/
+
+# Distribution
+
+build/
+dist/
+*.egg-info/
+
+# Operating System Files
+
+.DS_Store
+Thumbs.db
