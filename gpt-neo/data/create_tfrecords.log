@@ -1,0 +1,12 @@
+2026-07-22 00:44:58.627449: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudart64_110.dll'; dlerror: cudart64_110.dll not found
+2026-07-22 00:44:58.627740: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+C:\Users\khana\anaconda3\envs\gotneo39\lib\site-packages\google\api_core\_python_version_support.py:246: FutureWarning: You are using a non-supported Python version (3.9.25). Google will not post any further updates to google.api_core supporting this Python version. Please upgrade to the latest Python version, or at least Python 3.10, and then update google.api_core.
+  warnings.warn(message, FutureWarning)
+C:\Users\khana\anaconda3\envs\gotneo39\lib\site-packages\google\auth\__init__.py:54: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+C:\Users\khana\anaconda3\envs\gotneo39\lib\site-packages\google\oauth2\__init__.py:40: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+C:\Users\khana\anaconda3\envs\gotneo39\lib\site-packages\transformers\utils\versions.py:25: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+Writing TFRecord Files to data\tfrecords/. Parsed 0 input files. files_written : 0it [00:00, ?it/s]Writing TFRecord Files to data\tfrecords/. Parsed 0 input files. files_written : 91it [00:05, 15.38it/s]Writing TFRecord Files to data\tfrecords/. Parsed 1 input files. files_written : : 91it [00:05, 15.38it/s]Writing TFRecord Files to data\tfrecords/. Parsed 1 input files. files_written : : 91it [00:05, 15.22it/s]
+{'discarded': 0, 'processed': 1, 'successful': 1}
