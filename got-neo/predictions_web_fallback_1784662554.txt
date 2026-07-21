@@ -1,0 +1,73 @@
+Fallback test prompt
+
+
+
+Source excerpt:
+The Project Gutenberg eBook of Pride and Prejudice
+    
+This eBook is for the use of anyone anywhere in the United States and
+most other parts of the world at no cost and with almost no restrictions
+whatsoever. You may copy it, give it away or re-use it under the terms
+of the Project Gutenberg License included with this eBook or online
+at www.gutenberg.org. If you are not located in the United States,
+you will have to check the laws of the country where you are located
+before using this eBook.
+
+Title: Pride and Prejudice
+
+Author: Jane Austen
+
+
+        
+Release date: June 1, 1998 [eBook #1342]
+                Most recently updated: February 10, 2026
+
+Language: English
+
+Other information and formats: www.gutenberg.org/ebooks/1342
+
+Credits: Chuck Greif and the Online Distributed Proofreading 
+
+
+
+[Fallback after backend failure] Backend returned non-zero or produced no output.
+2026-07-22 01:05:44.005506: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudart64_110.dll'; dlerror: cudart64_110.dll not found
+2026-07-22 01:05:44.005561: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+C:\Users\khana\anaconda3\envs\gotneo39\lib\site-packages\google\api_core\_python_version_support.py:246: FutureWarning: You are using a non-supported Python version (3.9.25). Google will not post any further updates to google.api_core supporting this Python version. Please upgrade to the latest Python version, or at least Python 3.10, and then update google.api_core.
+  warnings.warn(message, FutureWarning)
+C:\Users\khana\anaconda3\envs\gotneo39\lib\site-packages\google\auth\__init__.py:54: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+C:\Users\khana\anaconda3\envs\gotneo39\lib\site-packages\google\oauth2\__init__.py:40: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+C:\Users\khana\anaconda3\envs\gotneo39\lib\site-packages\transformers\utils\versions.py:25: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+WARNING:tensorflow:From C:\Users\khana\anaconda3\envs\gotneo39\lib\site-packages\tensorflow\python\compat\v2_compat.py:96: disable_resource_variables (from tensorflow.python.ops.variable_scope) is deprecated and will be removed in a future version.
+Instructions for updating:
+non-resource variables are not supported in the long term
+2026-07-22 01:05:51.825673: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX AVX2
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-22 01:05:51.830171: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library nvcuda.dll
+2026-07-22 01:05:53.518260: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1733] Found device 0 with properties: 
+pciBusID: 0000:01:00.0 name: NVIDIA GeForce RTX 4050 Laptop GPU computeCapability: 8.9
+coreClock: 1.605GHz coreCount: 20 deviceMemorySize: 6.00GiB deviceMemoryBandwidth: 178.84GiB/s
+2026-07-22 01:05:53.519984: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudart64_110.dll'; dlerror: cudart64_110.dll not found
+2026-07-22 01:05:53.521645: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cublas64_11.dll'; dlerror: cublas64_11.dll not found
+2026-07-22 01:05:53.523140: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cublasLt64_11.dll'; dlerror: cublasLt64_11.dll not found
+2026-07-22 01:05:53.524540: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cufft64_10.dll'; dlerror: cufft64_10.dll not found
+2026-07-22 01:05:53.525936: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'curand64_10.dll'; dlerror: curand64_10.dll not found
+2026-07-22 01:05:53.527381: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cusolver64_11.dll'; dlerror: cusolver64_11.dll not found
+2026-07-22 01:05:53.529005: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cusparse64_11.dll'; dlerror: cusparse64_11.dll not found
+2026-07-22 01:05:53.531224: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudnn64_8.dll'; dlerror: cudnn64_8.dll not found
+2026-07-22 01:05:53.531279: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1766] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2026-07-22 01:05:53.662915: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1258] Device interconnect StreamExecutor with strength 1 edge matrix:
+2026-07-22 01:05:53.662953: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1264]      0 
+2026-07-22 01:05:53.662961: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1277] 0:   N 
+Traceback (most recent call last):
+  File "C:\python-beginner-projects\got-neo\main.py", line 263, in <module>
+    main(args)
+  File "C:\python-beginner-projects\got-neo\main.py", line 112, in main
+    params["attention_types"] = expand_attention_types_params(params["attention_types"])
+  File "C:\python-beginner-projects\got-neo\utils.py", line 135, in expand_attention_types_params
+    for _ in range(item[1]):
+IndexError: list index out of range

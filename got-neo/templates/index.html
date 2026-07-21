@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GPT-Neo Demo Frontend</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body { font-family: Inter, Arial, sans-serif; max-width: 1000px; margin: 24px auto; padding: 20px; }
+      textarea { width: 100%; height: 180px; resize: vertical; }
+      pre { background: #f8f9fa; padding: 16px; white-space: pre-wrap; word-break: break-word; }
+      .result { margin-top: 24px; }
+      .status { margin-bottom: 12px; }
+      .footer { margin-top: 32px; color: #666; font-size: 0.95rem; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="mb-3">GPT-Neo Web Demo</h1>
+          <p class="lead">Enter a prompt and click <strong>Generate</strong> to run the local backend. If the heavy ML dependencies are missing, a lightweight fallback generator will be used.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <form action="/generate" method="post">
+            <div class="mb-3">
+              <label for="prompt" class="form-label">Prompt</label>
+              <textarea id="prompt" name="prompt" class="form-control">{{ prompt or 'In a shocking finding, scientists discovered a herd of unicorns living in a remote, previously unexplored valley.' }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Generate</button>
+            <a href="/health" class="btn btn-outline-secondary ms-2">Health</a>
+          </form>
+        </div>
+        <div class="col-lg-4">
+          <div class="card p-3">
+            <h5>Status</h5>
+            <p class="mb-0">Backend: <strong>{{ 'Available' if result is none or not result.fallback else 'Fallback (no MeshTF)' }}</strong></p>
+            <p class="small text-muted mt-2">Tip: For full model generation, install dependencies and provide a trained checkpoint.</p>
+          </div>
+        </div>
+      </div>
+
+      {% if result %}
+      <div class="row result">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Result</h5>
+              <p class="status"><strong>Return code:</strong> {{ result.returncode }} {% if result.fallback %}<span class="badge bg-warning text-dark">Fallback</span>{% endif %}</p>
+              <p><strong>Output file:</strong> {{ result.output_file or 'None' }}</p>
+              <div><strong>Stdout:</strong></div>
+              <pre>{{ result.stdout or 'No stdout' }}</pre>
+              <div class="mt-2"><strong>Stderr:</strong></div>
+              <pre>{{ result.stderr or 'No stderr' }}</pre>
+              <div class="mt-2"><strong>Generated text:</strong></div>
+              <pre>{{ result.output_text or 'No generated text yet' }}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="row">
+        <div class="col-12 footer">
+          <p>Note: This demo is a lightweight frontend wrapper around the local backend. It does not use a real production GPT model unless configured with a real dataset and checkpoint.</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
