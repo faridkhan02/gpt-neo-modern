@@ -46,6 +46,29 @@
       .result {
         margin-top: 26px;
       }
+      .result-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .output-shell {
+        background: #f8fafc;
+        border: 1px solid #dbe5f0;
+        border-radius: 16px;
+        padding: 18px;
+      }
+      .metric-box {
+        background: #ffffff;
+        border: 1px solid #d9e4f2;
+        border-radius: 14px;
+      }
+      .meta-label {
+        font-size: 0.8rem;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
       .status-pill {
         display: inline-flex;
         align-items: center;
@@ -141,48 +164,55 @@
         <div class="col-12">
           <div class="result-card card border-0 p-4">
             <div class="card-body p-0">
-              <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-                <h5 class="card-title mb-0">Result Summary</h5>
-                {% if result.fallback %}
-                <span class="badge bg-warning text-dark">Fallback mode</span>
-                {% else %}
-                <span class="badge bg-success">Backend mode</span>
-                {% endif %}
+              <div class="result-toolbar mb-3">
+                <h5 class="card-title mb-0">Generated Output</h5>
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  {% if result.fallback %}
+                  <span class="badge bg-warning text-dark">Fallback mode</span>
+                  {% else %}
+                  <span class="badge bg-success">Backend mode</span>
+                  {% endif %}
+                  <button type="button" class="btn btn-sm btn-outline-primary" id="copyResultBtn">Copy result</button>
+                </div>
               </div>
 
               <div class="row g-3 mb-3">
                 <div class="col-md-4">
-                  <div class="border rounded p-3 h-100">
-                    <div class="text-muted small">Return code</div>
+                  <div class="metric-box p-3 h-100">
+                    <div class="meta-label text-muted">Return code</div>
                     <div class="fs-5 fw-semibold">{{ result.returncode }}</div>
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="border rounded p-3 h-100">
-                    <div class="text-muted small">Output file</div>
+                  <div class="metric-box p-3 h-100">
+                    <div class="meta-label text-muted">Output file</div>
                     <div class="fw-semibold text-break">{{ result.output_file or 'None' }}</div>
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="border rounded p-3 h-100">
-                    <div class="text-muted small">Execution mode</div>
+                  <div class="metric-box p-3 h-100">
+                    <div class="meta-label text-muted">Execution mode</div>
                     <div class="fw-semibold">{{ 'Full backend' if not result.fallback else 'Lightweight fallback' }}</div>
                   </div>
                 </div>
               </div>
 
-              <div class="mb-3">
-                <div class="fw-semibold">Stdout</div>
-                <pre>{{ result.stdout or 'No stdout' }}</pre>
+              <div class="output-shell mb-3">
+                <div class="fw-semibold mb-2">Generated output</div>
+                <pre id="generatedResult" data-output="{{ result.output_text or 'No generated text yet' }}">{{ result.output_text or 'No generated text yet' }}</pre>
               </div>
-              <div class="mb-3">
-                <div class="fw-semibold">Stderr</div>
-                <pre>{{ result.stderr or 'No stderr' }}</pre>
-              </div>
-              <div>
-                <div class="fw-semibold">Generated text</div>
-                <pre>{{ result.output_text or 'No generated text yet' }}</pre>
-              </div>
+
+              <details class="border rounded p-3 mb-0">
+                <summary class="fw-semibold">Technical details</summary>
+                <div class="mt-3">
+                  <div class="fw-semibold">Stdout</div>
+                  <pre>{{ result.stdout or 'No stdout' }}</pre>
+                </div>
+                <div class="mt-3">
+                  <div class="fw-semibold">Stderr</div>
+                  <pre>{{ result.stderr or 'No stderr' }}</pre>
+                </div>
+              </details>
             </div>
           </div>
         </div>
@@ -202,6 +232,8 @@
       const button = document.getElementById('generateBtn');
       const spinner = button.querySelector('.spinner-border');
       const chips = document.querySelectorAll('.example-chip');
+      const copyButton = document.getElementById('copyResultBtn');
+      const generatedResult = document.getElementById('generatedResult');
 
       chips.forEach((chip) => {
         chip.addEventListener('click', () => {
@@ -209,6 +241,28 @@
           prompt.value = chip.dataset.prompt;
         });
       });
+
+      if (copyButton && generatedResult) {
+        copyButton.addEventListener('click', async () => {
+          const output = generatedResult.textContent.trim();
+          try {
+            await navigator.clipboard.writeText(output);
+            copyButton.textContent = 'Copied';
+            copyButton.classList.add('btn-success');
+            copyButton.classList.remove('btn-outline-primary');
+            setTimeout(() => {
+              copyButton.textContent = 'Copy result';
+              copyButton.classList.remove('btn-success');
+              copyButton.classList.add('btn-outline-primary');
+            }, 1500);
+          } catch {
+            copyButton.textContent = 'Copy failed';
+            setTimeout(() => {
+              copyButton.textContent = 'Copy result';
+            }, 1500);
+          }
+        });
+      }
 
       if (form) {
         form.addEventListener('submit', () => {
