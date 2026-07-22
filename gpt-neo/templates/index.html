@@ -6,39 +6,132 @@
     <title>GPT-Neo Demo Frontend</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-      body { font-family: Inter, Arial, sans-serif; max-width: 1000px; margin: 24px auto; padding: 20px; }
-      textarea { width: 100%; height: 180px; resize: vertical; }
-      pre { background: #f8f9fa; padding: 16px; white-space: pre-wrap; word-break: break-word; }
-      .result { margin-top: 24px; }
-      .status { margin-bottom: 12px; }
-      .footer { margin-top: 32px; color: #666; font-size: 0.95rem; }
+      :root {
+        color-scheme: light;
+      }
+      body {
+        font-family: Inter, Arial, sans-serif;
+        background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+        color: #1f2937;
+        margin: 0;
+        padding: 24px;
+      }
+      .container {
+        max-width: 1100px;
+      }
+      .hero-card,
+      .panel,
+      .result-card {
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+      }
+      .hero-card {
+        background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+      }
+      textarea {
+        width: 100%;
+        min-height: 200px;
+        resize: vertical;
+        font-size: 1rem;
+      }
+      pre {
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 16px;
+        border-radius: 12px;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      .result {
+        margin-top: 26px;
+      }
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .status-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #14b8a6;
+        display: inline-block;
+      }
+      .help-list {
+        margin: 0;
+        padding-left: 18px;
+      }
+      .footer {
+        margin-top: 32px;
+        color: #55627a;
+        font-size: 0.95rem;
+      }
+      .btn-primary {
+        background: #2563eb;
+        border-color: #2563eb;
+      }
+      .btn-primary:hover {
+        background: #1d4ed8;
+        border-color: #1d4ed8;
+      }
+      .example-chip {
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
-    <div class="container">
-      <div class="row">
+    <div class="container py-3">
+      <div class="row mb-4">
         <div class="col-12">
-          <h1 class="mb-3">GPT-Neo Web Demo</h1>
-          <p class="lead">Enter a prompt and click <strong>Generate</strong> to run the local backend. If the heavy ML dependencies are missing, a lightweight fallback generator will be used.</p>
+          <div class="hero-card p-4 p-lg-5">
+            <h1 class="mb-2">GPT-Neo Local Demo</h1>
+            <p class="lead mb-3">Enter a prompt to test the local demo flow. This page is designed to explain what is happening, and it shows whether the request is running with the real backend or a lightweight fallback.</p>
+            <div class="d-flex flex-wrap gap-2">
+              <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle">Local-only demo</span>
+              <span class="badge bg-primary-subtle text-primary-emphasis border border-primary-subtle">Readable output panel</span>
+              <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">Fallback-aware status</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="row">
+      <div class="row g-4 align-items-start">
         <div class="col-lg-8">
-          <form action="/generate" method="post">
-            <div class="mb-3">
-              <label for="prompt" class="form-label">Prompt</label>
-              <textarea id="prompt" name="prompt" class="form-control">{{ prompt or 'In a shocking finding, scientists discovered a herd of unicorns living in a remote, previously unexplored valley.' }}</textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Generate</button>
-            <a href="/health" class="btn btn-outline-secondary ms-2">Health</a>
-          </form>
+          <div class="panel p-4">
+            <form id="generateForm" action="/generate" method="post">
+              <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <label for="prompt" class="form-label fw-semibold mb-0">Prompt</label>
+                <div class="d-flex gap-2 flex-wrap">
+                  <button type="button" class="btn btn-sm btn-outline-primary example-chip" data-prompt="In a shocking finding, scientists discovered a herd of unicorns living in a remote, previously unexplored valley.">Example A</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary example-chip" data-prompt="Artificial intelligence is transforming the way we build tools for everyday work.">Example B</button>
+                </div>
+              </div>
+              <textarea id="prompt" name="prompt" class="form-control" placeholder="Type a prompt here...">{{ prompt or 'In a shocking finding, scientists discovered a herd of unicorns living in a remote, previously unexplored valley.' }}</textarea>
+              <div class="d-flex flex-wrap gap-2 mt-3">
+                <button id="generateBtn" type="submit" class="btn btn-primary">
+                  <span class="me-2">Generate</span>
+                  <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                </button>
+                <a href="/health" class="btn btn-outline-secondary">Health check</a>
+              </div>
+            </form>
+          </div>
         </div>
+
         <div class="col-lg-4">
-          <div class="card p-3">
-            <h5>Status</h5>
-            <p class="mb-0">Backend: <strong>{{ 'Available' if result is none or not result.fallback else 'Fallback (no MeshTF)' }}</strong></p>
-            <p class="small text-muted mt-2">Tip: For full model generation, install dependencies and provide a trained checkpoint.</p>
+          <div class="panel p-4">
+            <h5 class="mb-3">What this UI shows</h5>
+            <div class="status-pill mb-2">
+              <span class="status-dot"></span>
+              <span><strong>Mode:</strong> {{ 'Full backend' if result is none or not result.fallback else 'Fallback demo' }}</span>
+            </div>
+            <p class="mb-2 small text-muted">If the heavy ML dependencies are missing, the app automatically switches to a lightweight local demo so the page still responds.</p>
+            <ul class="help-list small text-muted">
+              <li>Use the prompt box to send a new request.</li>
+              <li>Review the return code, stdout, stderr, and generated text below.</li>
+              <li>Use the health check if you want to confirm the app is running.</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -46,17 +139,50 @@
       {% if result %}
       <div class="row result">
         <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Result</h5>
-              <p class="status"><strong>Return code:</strong> {{ result.returncode }} {% if result.fallback %}<span class="badge bg-warning text-dark">Fallback</span>{% endif %}</p>
-              <p><strong>Output file:</strong> {{ result.output_file or 'None' }}</p>
-              <div><strong>Stdout:</strong></div>
-              <pre>{{ result.stdout or 'No stdout' }}</pre>
-              <div class="mt-2"><strong>Stderr:</strong></div>
-              <pre>{{ result.stderr or 'No stderr' }}</pre>
-              <div class="mt-2"><strong>Generated text:</strong></div>
-              <pre>{{ result.output_text or 'No generated text yet' }}</pre>
+          <div class="result-card card border-0 p-4">
+            <div class="card-body p-0">
+              <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h5 class="card-title mb-0">Result Summary</h5>
+                {% if result.fallback %}
+                <span class="badge bg-warning text-dark">Fallback mode</span>
+                {% else %}
+                <span class="badge bg-success">Backend mode</span>
+                {% endif %}
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-4">
+                  <div class="border rounded p-3 h-100">
+                    <div class="text-muted small">Return code</div>
+                    <div class="fs-5 fw-semibold">{{ result.returncode }}</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="border rounded p-3 h-100">
+                    <div class="text-muted small">Output file</div>
+                    <div class="fw-semibold text-break">{{ result.output_file or 'None' }}</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="border rounded p-3 h-100">
+                    <div class="text-muted small">Execution mode</div>
+                    <div class="fw-semibold">{{ 'Full backend' if not result.fallback else 'Lightweight fallback' }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div class="fw-semibold">Stdout</div>
+                <pre>{{ result.stdout or 'No stdout' }}</pre>
+              </div>
+              <div class="mb-3">
+                <div class="fw-semibold">Stderr</div>
+                <pre>{{ result.stderr or 'No stderr' }}</pre>
+              </div>
+              <div>
+                <div class="fw-semibold">Generated text</div>
+                <pre>{{ result.output_text or 'No generated text yet' }}</pre>
+              </div>
             </div>
           </div>
         </div>
@@ -65,11 +191,32 @@
 
       <div class="row">
         <div class="col-12 footer">
-          <p>Note: This demo is a lightweight frontend wrapper around the local backend. It does not use a real production GPT model unless configured with a real dataset and checkpoint.</p>
+          <p class="mb-0">Note: The demo is designed for local experimentation. A real model requires a complete training checkpoint, tokenizer setup, and the proper backend dependencies.</p>
         </div>
       </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const form = document.getElementById('generateForm');
+      const button = document.getElementById('generateBtn');
+      const spinner = button.querySelector('.spinner-border');
+      const chips = document.querySelectorAll('.example-chip');
+
+      chips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+          const prompt = document.getElementById('prompt');
+          prompt.value = chip.dataset.prompt;
+        });
+      });
+
+      if (form) {
+        form.addEventListener('submit', () => {
+          button.disabled = true;
+          spinner.classList.remove('d-none');
+          button.querySelector('span').textContent = 'Generating…';
+        });
+      }
+    </script>
   </body>
 </html>
