@@ -136,6 +136,7 @@
                   <span class="me-2">Generate</span>
                   <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                 </button>
+                <button id="clearBtn" type="button" class="btn btn-outline-secondary">Clear prompt</button>
                 <a href="/health" class="btn btn-outline-secondary">Health check</a>
               </div>
             </form>
@@ -242,6 +243,8 @@
         });
       });
 
+      const clearButton = document.getElementById('clearBtn');
+
       if (copyButton && generatedResult) {
         copyButton.addEventListener('click', async () => {
           const output = generatedResult.textContent.trim();
@@ -261,6 +264,14 @@
               copyButton.textContent = 'Copy result';
             }, 1500);
           }
+        });
+      }
+
+      if (clearButton) {
+        clearButton.addEventListener('click', () => {
+          const prompt = document.getElementById('prompt');
+          prompt.value = '';
+          prompt.focus();
         });
       }
 
