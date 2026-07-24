@@ -4,6 +4,10 @@
 
 This repository contains a GPT-style language model training project built on TensorFlow, Mesh TensorFlow, and a custom GPT-like pipeline.
 
+### Contact
+
+- LinkedIn: https://www.linkedin.com/in/md-farid-khan-bb662b2b4/
+
 This code is intended for local model training and generation. It is not an OpenAI or Hugging Face hosted API client.
 
 This project is a backend machine learning pipeline only. It does not include a web-based frontend or UI application.

@@ -7,131 +7,281 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
       :root {
-        color-scheme: light;
+        color-scheme: dark;
+        --bg: #07080f;
+        --surface: rgba(18, 22, 38, 0.88);
+        --surface-strong: rgba(29, 34, 59, 0.95);
+        --border: rgba(255, 212, 84, 0.14);
+        --text: #f8fafc;
+        --muted: #8e98b0;
+        --accent: #ffd24d;
+        --accent-soft: rgba(255, 210, 77, 0.15);
       }
       body {
         font-family: Inter, Arial, sans-serif;
-        background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
-        color: #1f2937;
+        background: radial-gradient(circle at top, rgba(255, 201, 59, 0.18), transparent 24%),
+                    radial-gradient(circle at 75% 10%, rgba(255, 234, 154, 0.08), transparent 20%),
+                    linear-gradient(180deg, #04060d 0%, #090c16 100%);
+        color: var(--text);
         margin: 0;
-        padding: 24px;
+        min-height: 100vh;
       }
-      .container {
-        max-width: 1100px;
+      .page-shell {
+        padding: 28px;
       }
-      .hero-card,
-      .panel,
-      .result-card {
-        border: 1px solid rgba(15, 23, 42, 0.08);
-        border-radius: 18px;
-        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+      .app-shell {
+        display: grid;
+        gap: 24px;
       }
-      .hero-card {
-        background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
-      }
-      textarea {
-        width: 100%;
-        min-height: 200px;
-        resize: vertical;
-        font-size: 1rem;
-      }
-      pre {
-        background: #0f172a;
-        color: #e2e8f0;
-        padding: 16px;
-        border-radius: 12px;
-        white-space: pre-wrap;
-        word-break: break-word;
-      }
-      .result {
-        margin-top: 26px;
-      }
-      .result-toolbar {
+      .topbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        flex-wrap: wrap;
+        max-width: 100%;
       }
-      .output-shell {
-        background: #f8fafc;
-        border: 1px solid #dbe5f0;
-        border-radius: 16px;
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--accent);
+      }
+      .brand-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #ffda6e 0%, #ffb602 100%);
+        display: grid;
+        place-items: center;
+        color: #111827;
+        font-weight: 800;
+      }
+      .hero-grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: minmax(280px, 360px) 1fr;
+      }
+      .sidebar,
+      .main-panel,
+      .result-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+        backdrop-filter: blur(18px);
+      }
+      .sidebar {
+        padding: 24px;
+      }
+      .sidebar h2,
+      .main-panel h1,
+      .result-card h5 {
+        margin-top: 0;
+      }
+      .main-panel {
+        padding: 32px;
+      }
+      .section-label {
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 0.75rem;
+        margin-bottom: 18px;
+      }
+      .hero-title {
+        font-size: clamp(2.8rem, 3.6vw, 4.5rem);
+        line-height: 1.03;
+        margin: 0;
+      }
+      .hero-copy {
+        color: #d8dde8;
+        font-size: 1rem;
+        max-width: 52rem;
+        margin: 22px 0 0;
+      }
+      .hero-tagline {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 24px;
+      }
+      .hero-tagline span {
+        font-size: 0.9rem;
+        background: rgba(255, 210, 77, 0.12);
+        color: var(--accent);
+        padding: 10px 14px;
+        border-radius: 999px;
+      }
+      .nav-card {
+        margin-bottom: 18px;
+        padding: 20px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .nav-card h3 {
+        margin-bottom: 16px;
+        font-size: 1.05rem;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        margin-bottom: 12px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .nav-item:last-child { margin-bottom: 0; }
+      .nav-item small { color: var(--muted); }
+      textarea {
+        width: 100%;
+        min-height: 170px;
+        resize: vertical;
+        font-size: 1rem;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 20px;
+        background: rgba(255,255,255,0.04);
+        color: var(--text);
         padding: 18px;
       }
-      .metric-box {
-        background: #ffffff;
-        border: 1px solid #d9e4f2;
-        border-radius: 14px;
+      .form-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 22px;
       }
-      .meta-label {
-        font-size: 0.8rem;
-        letter-spacing: 0.02em;
-        text-transform: uppercase;
+      .btn-primary {
+        background: linear-gradient(135deg, #ffd24d 0%, #ffb602 100%);
+        border-color: transparent;
+        color: #111827;
+        box-shadow: 0 18px 45px rgba(255, 188, 47, 0.2);
+      }
+      .btn-primary:hover {
+        background: linear-gradient(135deg, #ffcf3a 0%, #ff9e00 100%);
+      }
+      .btn-outline-secondary,
+      .btn-outline-primary {
+        color: var(--text);
+        border-color: rgba(255,255,255,0.16);
+      }
+      .metric-box {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 20px;
+      }
+      .output-shell {
+        background: rgba(0,0,0,0.48);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 24px;
+      }
+      pre {
+        background: transparent;
+        color: var(--text);
+        padding: 20px;
+        border-radius: 18px;
+        white-space: pre-wrap;
+        word-break: break-word;
       }
       .status-pill {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
       }
       .status-dot {
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background: #14b8a6;
-        display: inline-block;
-      }
-      .help-list {
-        margin: 0;
-        padding-left: 18px;
+        background: #ffd24d;
       }
       .footer {
-        margin-top: 32px;
-        color: #55627a;
+        margin-top: 36px;
+        color: #94a3b8;
         font-size: 0.95rem;
       }
-      .btn-primary {
-        background: #2563eb;
-        border-color: #2563eb;
+      .copy-button {
+        min-width: 130px;
       }
-      .btn-primary:hover {
-        background: #1d4ed8;
-        border-color: #1d4ed8;
+      .badge-soft {
+        background: rgba(255, 210, 77, 0.14);
+        color: var(--accent);
       }
-      .example-chip {
-        cursor: pointer;
+      .footnote a {
+        color: #ffd24d;
+        text-decoration: none;
+      }
+      .footnote a:hover {
+        text-decoration: underline;
+      }
+      @media (max-width: 991px) {
+        .hero-grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>
   <body>
-    <div class="container py-3">
-      <div class="row mb-4">
-        <div class="col-12">
-          <div class="hero-card p-4 p-lg-5">
-            <h1 class="mb-2">GPT-Neo Local Demo</h1>
-            <p class="lead mb-3">Enter a prompt to test the local demo flow. This page is designed to explain what is happening, and it shows whether the request is running with the real backend or a lightweight fallback.</p>
-            <div class="d-flex flex-wrap gap-2">
-              <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle">Local-only demo</span>
-              <span class="badge bg-primary-subtle text-primary-emphasis border border-primary-subtle">Readable output panel</span>
-              <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">Fallback-aware status</span>
-            </div>
-          </div>
+    <div class="page-shell">
+      <div class="topbar">
+        <div class="brand">
+          <div class="brand-icon">B</div>
+          BuildHub
+        </div>
+        <div class="hero-tagline">
+          <span>AI-assisted text generation</span>
         </div>
       </div>
 
-      <div class="row g-4 align-items-start">
-        <div class="col-lg-8">
-          <div class="panel p-4">
-            <form id="generateForm" action="/generate" method="post">
-              <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
-                <label for="prompt" class="form-label fw-semibold mb-0">Prompt</label>
-                <div class="d-flex gap-2 flex-wrap">
-                  <button type="button" class="btn btn-sm btn-outline-primary example-chip" data-prompt="In a shocking finding, scientists discovered a herd of unicorns living in a remote, previously unexplored valley.">Example A</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary example-chip" data-prompt="Artificial intelligence is transforming the way we build tools for everyday work.">Example B</button>
+      <div class="app-shell">
+        <div class="hero-grid">
+          <section class="sidebar">
+            <div class="section-label">Welcome back</div>
+            <h2>Alex</h2>
+            <p class="hero-copy">Which house drawing do you want to analyze today? Enter a prompt and let the local demo generate a response with fallback support.</p>
+
+            <div class="nav-card">
+              <h3>Quick actions</h3>
+              <div class="nav-item">
+                <div>
+                  <strong>Search suppliers</strong>
+                  <small>Find the best prices for materials</small>
                 </div>
+                <span>→</span>
               </div>
-              <textarea id="prompt" name="prompt" class="form-control" placeholder="Type a prompt here...">{{ prompt or 'In a shocking finding, scientists discovered a herd of unicorns living in a remote, previously unexplored valley.' }}</textarea>
-              <div class="d-flex flex-wrap gap-2 mt-3">
+              <div class="nav-item">
+                <div>
+                  <strong>Select materials</strong>
+                  <small>Decide on wood, steel, or concrete specs</small>
+                </div>
+                <span>→</span>
+              </div>
+              <div class="nav-item">
+                <div>
+                  <strong>Calculate cost</strong>
+                  <small>Summarize pricing and build estimates</small>
+                </div>
+                <span>→</span>
+              </div>
+            </div>
+
+            <div class="nav-card">
+              <h3>Contact</h3>
+              <p class="mb-0 footnote">LinkedIn: <a href="https://www.linkedin.com/in/md-farid-khan-bb662b2b4/" target="_blank" rel="noopener noreferrer">md-farid-khan-bb662b2b4</a></p>
+            </div>
+          </section>
+
+          <section class="main-panel">
+            <div class="section-label">GPT-Neo Local Demo</div>
+            <h1 class="hero-title">Build smarter prompt workflows with a clean local UI.</h1>
+            <p class="hero-copy">This page is designed to match the developer dashboard style and show the local fallback path when TensorFlow or Mesh TensorFlow is not installed.</p>
+
+            <form id="generateForm" action="/generate" method="post">
+              <div class="mb-3">
+                <label for="prompt" class="form-label fw-semibold mb-2">Prompt</label>
+                <textarea id="prompt" name="prompt" placeholder="Type a prompt here...">{{ prompt or 'In a shocking finding, scientists discovered a herd of unicorns living in a remote, previously unexplored valley.' }}</textarea>
+              </div>
+              <div class="form-actions">
                 <button id="generateBtn" type="submit" class="btn btn-primary">
                   <span class="me-2">Generate</span>
                   <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
@@ -140,80 +290,56 @@
                 <a href="/health" class="btn btn-outline-secondary">Health check</a>
               </div>
             </form>
-          </div>
+          </section>
         </div>
-
-        <div class="col-lg-4">
-          <div class="panel p-4">
-            <h5 class="mb-3">What this UI shows</h5>
-            <div class="status-pill mb-2">
-              <span class="status-dot"></span>
-              <span><strong>Mode:</strong> {{ 'Full backend' if result is none or not result.fallback else 'Fallback demo' }}</span>
-            </div>
-            <p class="mb-2 small text-muted">If the heavy ML dependencies are missing, the app automatically switches to a lightweight local demo so the page still responds.</p>
-            <ul class="help-list small text-muted">
-              <li>Use the prompt box to send a new request.</li>
-              <li>Review the return code, stdout, stderr, and generated text below.</li>
-              <li>Use the health check if you want to confirm the app is running.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
 
       {% if result %}
-      <div class="row result">
-        <div class="col-12">
-          <div class="result-card card border-0 p-4">
-            <div class="card-body p-0">
-              <div class="result-toolbar mb-3">
-                <h5 class="card-title mb-0">Generated Output</h5>
-                <div class="d-flex align-items-center gap-2 flex-wrap">
-                  {% if result.fallback %}
-                  <span class="badge bg-warning text-dark">Fallback mode</span>
-                  {% else %}
-                  <span class="badge bg-success">Backend mode</span>
-                  {% endif %}
-                  <button type="button" class="btn btn-sm btn-outline-primary" id="copyResultBtn">Copy result</button>
-                </div>
-              </div>
+      <div class="result-card p-4">
+        <div class="result-toolbar mb-4">
+          <div>
+            <div class="section-label">Generated output</div>
+            <h5 class="mb-1">Response summary</h5>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-primary copy-button" id="copyResultBtn">Copy result</button>
+        </div>
 
-              <div class="row g-3 mb-3">
-                <div class="col-md-4">
-                  <div class="metric-box p-3 h-100">
-                    <div class="meta-label text-muted">Return code</div>
-                    <div class="fs-5 fw-semibold">{{ result.returncode }}</div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="metric-box p-3 h-100">
-                    <div class="meta-label text-muted">Output file</div>
-                    <div class="fw-semibold text-break">{{ result.output_file or 'None' }}</div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="metric-box p-3 h-100">
-                    <div class="meta-label text-muted">Execution mode</div>
-                    <div class="fw-semibold">{{ 'Full backend' if not result.fallback else 'Lightweight fallback' }}</div>
-                  </div>
-                </div>
-              </div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="metric-box p-3 h-100">
+              <div class="meta-label">Return code</div>
+              <div class="fs-5 fw-semibold">{{ result.returncode }}</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="metric-box p-3 h-100">
+              <div class="meta-label">Output file</div>
+              <div class="fw-semibold text-break">{{ result.output_file or 'None' }}</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="metric-box p-3 h-100">
+              <div class="meta-label">Execution mode</div>
+              <div class="fw-semibold">{{ 'Full backend' if not result.fallback else 'Lightweight fallback' }}</div>
+            </div>
+          </div>
+        </div>
 
-              <div class="output-shell mb-3">
-                <div class="fw-semibold mb-2">Generated output</div>
-                <pre id="generatedResult" data-output="{{ result.output_text or 'No generated text yet' }}">{{ result.output_text or 'No generated text yet' }}</pre>
-              </div>
+        <div class="output-shell mb-4">
+          <div class="fw-semibold mb-3">Text output</div>
+          <pre id="generatedResult" data-output="{{ result.output_text or 'No generated text yet' }}">{{ result.output_text or 'No generated text yet' }}</pre>
+        </div>
 
-              <details class="border rounded p-3 mb-0">
-                <summary class="fw-semibold">Technical details</summary>
-                <div class="mt-3">
-                  <div class="fw-semibold">Stdout</div>
-                  <pre>{{ result.stdout or 'No stdout' }}</pre>
-                </div>
-                <div class="mt-3">
-                  <div class="fw-semibold">Stderr</div>
-                  <pre>{{ result.stderr or 'No stderr' }}</pre>
-                </div>
-              </details>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="metric-box p-3">
+              <div class="meta-label">Stdout</div>
+              <pre>{{ result.stdout or 'No stdout' }}</pre>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="metric-box p-3">
+              <div class="meta-label">Stderr</div>
+              <pre>{{ result.stderr or 'No stderr' }}</pre>
             </div>
           </div>
         </div>
